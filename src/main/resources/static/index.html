@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>StayEase | Hotel Management</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <div class="brand"><span class="brand-mark">S</span><div><strong>StayEase</strong><small>HOTEL MANAGEMENT</small></div></div>
+      <div class="nav-label">WORKSPACE</div>
+      <button class="nav-item active" data-page="dashboard">▦ <span>Dashboard</span></button>
+      <button class="nav-item" data-page="rooms">▣ <span>Rooms</span></button>
+      <button class="nav-item" data-page="customers">♙ <span>Customers</span></button>
+      <button class="nav-item" data-page="bookings">▤ <span>Bookings</span></button>
+      <button class="nav-item" data-page="payments">₹ <span>Payments</span></button>
+      <div class="nav-label">MANAGEMENT</div>
+      <button class="nav-item" data-page="staff">♧ <span>Staff</span></button>
+      <button class="nav-item" data-page="admin">⚙ <span>Admin</span></button>
+      <div class="sidebar-bottom"><div class="avatar">A</div><div><strong>Administrator</strong><small>Hotel Admin</small></div></div>
+    </aside>
+
+    <main class="main">
+      <header class="topbar">
+        <div><div class="eyebrow">HOTEL OPERATIONS</div><h1 id="page-title">Dashboard</h1></div>
+        <div class="top-actions"><span class="status-dot"></span><span>System online</span><button class="profile">A</button></div>
+      </header>
+
+      <section id="dashboard" class="page active">
+        <div class="welcome"><div><div class="eyebrow light">OVERVIEW</div><h2>Good day, Admin 👋</h2><p>Here’s what’s happening at your hotel today.</p></div><div class="welcome-date" id="today"></div></div>
+        <div class="stats-grid">
+          <article class="stat-card"><div class="stat-top"><span>Total Rooms</span><span class="stat-icon blue">▣</span></div><strong id="room-count">—</strong><small>Rooms in the system</small></article>
+          <article class="stat-card"><div class="stat-top"><span>Customers</span><span class="stat-icon purple">♙</span></div><strong id="customer-count">—</strong><small>Registered customers</small></article>
+          <article class="stat-card"><div class="stat-top"><span>Bookings</span><span class="stat-icon orange">▤</span></div><strong id="booking-count">—</strong><small>All bookings</small></article>
+          <article class="stat-card"><div class="stat-top"><span>Payments</span><span class="stat-icon green">₹</span></div><strong id="payment-count">—</strong><small>Payment records</small></article>
+        </div>
+        <div class="panel"><div class="panel-heading"><div><h3>Quick actions</h3><p>Go directly to a common task.</p></div></div>
+          <div class="quick-grid">
+            <button class="quick-action" data-go="rooms"><span class="quick-icon blue">＋</span><strong>Add / view rooms</strong><small>Manage room inventory</small></button>
+            <button class="quick-action" data-go="customers"><span class="quick-icon purple">＋</span><strong>Register customer</strong><small>Save guest information</small></button>
+            <button class="quick-action" data-go="bookings"><span class="quick-icon orange">＋</span><strong>Create booking</strong><small>Reserve a hotel room</small></button>
+            <button class="quick-action" data-go="payments"><span class="quick-icon green">₹</span><strong>Record payment</strong><small>Manage guest payments</small></button>
+          </div>
+        </div>
+        <div class="panel"><div class="panel-heading"><div><h3>Recent bookings</h3><p>Latest reservations from your system.</p></div><button class="text-btn" data-go="bookings">View bookings →</button></div><div id="recent-bookings" class="table-wrap"><div class="empty">Loading bookings…</div></div></div>
+      </section>
+
+      <section id="rooms" class="page">
+        <div class="section-intro"><div><h2>Room management</h2><p>Add rooms and check room availability.</p></div></div>
+        <div class="panel"><h3>Add a room</h3><form id="room-form" class="form-grid">
+          <label>Room number<input name="roomNumber" placeholder="101" required /></label>
+          <label>Room type<select name="roomType" required><option value="">Select type</option><option>STANDARD</option><option>DELUXE</option><option>SUITE</option></select></label>
+          <label>Price per night (₹)<input name="pricePerNight" type="number" min="1" placeholder="1200" required /></label>
+          <label>Availability<select name="availabilityStatus"><option>AVAILABLE</option><option>UNAVAILABLE</option></select></label>
+          <button class="primary-btn" type="submit">Save room</button>
+        </form></div>
+        <div class="panel"><div class="panel-heading"><h3>Room list</h3><button class="secondary-btn" id="refresh-rooms">Refresh</button></div><div id="rooms-table" class="table-wrap"></div></div>
+      </section>
+
+      <section id="customers" class="page">
+        <div class="section-intro"><div><h2>Customer management</h2><p>Register and view hotel guests.</p></div></div>
+        <div class="panel"><h3>Register customer</h3><form id="customer-form" class="form-grid">
+          <label>Customer name<input type="text" name="customerName" required/></label>
+          <label>Email<input type="email" name="email"></label>
+          <label>Phone		  <input type="text" name="phoneNumber"
+		         maxlength="10" required/></label>
+          <label>Address<input type="text" name="address"/></label>
+          <button class="primary-btn" type="submit">Save customer</button>
+        </form></div>
+        <div class="panel"><div class="panel-heading"><h3>Customers</h3><button class="secondary-btn" id="refresh-customers">Refresh</button></div><div id="customers-table" class="table-wrap"></div></div>
+      </section>
+
+      <section id="bookings" class="page">
+        <div class="section-intro"><div><h2>Booking management</h2><p>Create a reservation using an existing customer and room.</p></div></div>
+        <div class="panel"><h3>Create booking</h3><form id="booking-form" class="form-grid">
+          <label>Customer ID<input name="customerId" type="number" min="1" placeholder="1" required /></label>
+          <label>Room ID<input name="roomId" type="number" min="1" placeholder="1" required /></label>
+          <label>Check-in date<input name="checkInDate" type="date" required /></label>
+          <label>Check-out date<input name="checkOutDate" type="date" required /></label>
+          <button class="primary-btn" type="submit">Create booking</button>
+        </form><p class="hint">The backend should calculate the total amount from the selected room price and number of nights.</p></div>
+        <div class="panel"><div class="panel-heading"><h3>All bookings</h3><button class="secondary-btn" id="refresh-bookings">Refresh</button></div><div id="bookings-table" class="table-wrap"></div></div>
+      </section>
+
+      <section id="payments" class="page">
+        <div class="section-intro"><div><h2>Payment & billing</h2><p>Record a payment for an existing booking.</p></div></div>
+        <div class="panel"><h3>Record payment</h3><form id="payment-form" class="form-grid">
+          <label>Booking ID<input name="bookingId" type="number" min="1" placeholder="1" required /></label>
+          <label>Payment method<select name="paymentMethod" required><option value="">Select method</option><option>UPI</option><option>CASH</option><option>CARD</option></select></label>
+          <button class="primary-btn" type="submit">Submit payment</button>
+        </form><p class="hint">This uses the simulated payment API from Phase 5. It does not charge a real bank account.</p></div>
+        <div class="panel"><div class="panel-heading"><h3>Payment records</h3><button class="secondary-btn" id="refresh-payments">Refresh</button></div><div id="payments-table" class="table-wrap"></div></div>
+      </section>
+
+      <section id="staff" class="page">
+        <div class="section-intro"><div><h2>Staff management</h2><p>Register hotel employees and manage their details.</p></div></div>
+        <div class="panel"><h3>Register staff</h3><form id="staff-form" class="form-grid">
+          <label>Staff name<input name="staffName" placeholder="Priya" required /></label>
+          <label>Email<input name="email" type="email" placeholder="priya@example.com" required /></label>
+          <label>Temporary password<input name="password" type="password" minlength="8" placeholder="At least 8 characters" required /></label>
+          <label>Phone<input name="phone" placeholder="9876543210" required /></label>
+          <label>Designation<input name="designation" placeholder="Receptionist" required /></label>
+          <label>Monthly salary (₹)<input name="salary" type="number" min="0" placeholder="18000" required /></label>
+          <label>Role<select name="role"><option>STAFF</option><option>MANAGER</option></select></label>
+          <button class="primary-btn" type="submit">Register staff</button>
+        </form><p class="hint">Connect this form only after your backend staff registration endpoint and password encryption are ready.</p></div>
+        <div class="panel"><div class="panel-heading"><h3>Staff list</h3><button class="secondary-btn" id="refresh-staff">Refresh</button></div><div id="staff-table" class="table-wrap"></div></div>
+      </section>
+
+      <section id="admin" class="page">
+        <div class="section-intro"><div><h2>Admin settings</h2><p>Admin account and system connection settings.</p></div></div>
+        <div class="panel"><h3>Backend connection</h3><label class="wide-label">Spring Boot API base URL<input id="api-base" value="http://localhost:8080" /></label><p class="hint">Default local backend address. Change this if your Spring Boot application uses another port.</p><button class="primary-btn" id="save-api">Save connection</button></div>
+        <div class="panel"><h3>About this project</h3><p class="about-copy">StayEase is a Smart Hotel Management System frontend for your final-year project. It is built with HTML, CSS and JavaScript and communicates with your Spring Boot REST APIs.</p></div>
+      </section>
+      <div id="toast" class="toast" role="status"></div>
+      <footer>StayEase Hotel Management <span>Final Year Project UI</span></footer>
+    </main>
+  </div>
+  <script src="app.js"></script>
+</body>
+</html>
